@@ -48,6 +48,20 @@ function App() {
 
   const fetchEventDetails = async (contractInstance) => {
     if (!contractInstance) return;
+
+    // Check if we're still using the placeholder contract address
+    // Bypassing network calls makes the display instant to avoid network timeout delays. 
+    if (CONTRACT_ADDRESS === "YOUR_CONTRACT_ADDRESS") {
+      setEventDetails({
+        name: "College Fest 2026",
+        date: "10 May 2026",
+        price: "0.01",
+        max: "100"
+      });
+      setSoldTickets("12");
+      return;
+    }
+
     try {
       const [name, date, price, max] = await contractInstance.getEventDetails();
       const currentSold = await contractInstance.nextTokenId();
@@ -61,7 +75,7 @@ function App() {
       setSoldTickets(currentSold.toString());
     } catch (err) {
       console.error("Error fetching event details - using fallback dummy data", err);
-      // Fallback data when contract is not yet deployed
+      // Fallback data when contract fetch fails
       setEventDetails({
         name: "College Fest 2026",
         date: "10 May 2026",
