@@ -29,9 +29,8 @@ function App() {
       // Connect to window.ethereum if available, but read-only even without connect
       let currentContract;
 
-      // 🔥 Use Infura RPC for fast reads
       const rpcProvider = new ethers.JsonRpcProvider(
-        "https://sepolia.infura.io/v3/b435f57b6bf447d89554daabe91213dc"
+        import.meta.env.VITE_INFURA_URL
       );
 
       currentContract = new ethers.Contract(
